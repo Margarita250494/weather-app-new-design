@@ -21,7 +21,7 @@ export const useHourlyWeather = (weather: WeatherResponse) => {
     if (!list) return
     const current = currentRef.current
 
-    list.scrollTop = current ? current.offsetTop : 0
+    list.scrollLeft = current ? current.offsetLeft : 0
   }, [activeDay, weather])
 
   const toggleDayMenu = () => setOpenDay((prev) => !prev)

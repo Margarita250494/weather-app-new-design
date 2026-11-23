@@ -1,20 +1,20 @@
-import drizzleDay from '../assets/day/icon-drizzle.png'
-import fogDay from '../assets/day/icon-fog.png'
-import overcastDay from '../assets/day/icon-overcast.png'
-import partlyCloudyDay from '../assets/day/icon-partly-cloudy.png'
-import rainDay from '../assets/day/icon-rain.png'
-import snowDay from '../assets/day/icon-snow.png'
-import stormDay from '../assets/day/icon-storm.png'
-import sunnyDay from '../assets/day/icon-sunny.png'
-import drizzleNight from '../assets/night/drizzle-night.png'
-import fogNight from '../assets/night/fog-night.png'
-import overcastNight from '../assets/night/overcast-night.png'
-import partlyCloudyNight from '../assets/night/partly-cloudy-night.png'
-import rainNight from '../assets/night/rain-night.png'
-import snowNight from '../assets/night/snow-night.png'
-import stormNight from '../assets/night/storm-night.png'
-import sunnyNight from '../assets/night/sunny-night.png'
-import undefinedWeatherIcon from '../assets/unknown.png'
+import {
+  DayCloudy,
+  DayDrizzle,
+  DayFog,
+  DayOvercast,
+  DayRain,
+  DaySnow,
+  DayStorm,
+  DaySunny,
+  NightClear,
+  NightDrizzle,
+  NightFog,
+  NightOvercast,
+  NightPartlyCloudy,
+  NightRain,
+  NightSnow, NightStorm, UnknownWeather,
+} from '../components/Icons.ts'
 
 import type { TWeatherIcon, TWeatherIconItem } from './types.ts'
 
@@ -22,50 +22,66 @@ export const weatherIcons: TWeatherIcon[] = [
   {
     label: 'Sunny',
     codes: [0, 1],
-    day: sunnyDay,
-    night: sunnyNight,
+    day: DaySunny,
+    night: NightClear,
+    bgClass: 'bg-sunny/25',
+    textClass: 'text-sunny',
   },
   {
     label: 'Partly Cloudy',
     codes: [2],
-    day: partlyCloudyDay,
-    night: partlyCloudyNight,
+    day: DayCloudy,
+    night: NightPartlyCloudy,
+    bgClass: 'bg-partly-cloudy/25',
+    textClass: 'text-partly-cloudy',
   },
   {
     label: 'Overcast',
     codes: [3],
-    day: overcastDay,
-    night: overcastNight,
+    day: DayOvercast,
+    night: NightOvercast,
+    bgClass: 'bg-overcast/25',
+    textClass: 'text-overcast',
   },
   {
     label: 'Fog',
     codes: [45, 48],
-    day: fogDay,
-    night: fogNight,
+    day: DayFog,
+    night: NightFog,
+    bgClass: 'bg-fog/25',
+    textClass: 'text-fog',
   },
   {
     label: 'Drizzle',
     codes: [51, 53, 55, 56, 57],
-    day: drizzleDay,
-    night: drizzleNight,
+    day: DayDrizzle,
+    night: NightDrizzle,
+    bgClass: 'bg-drizzle/25',
+    textClass: 'text-drizzle',
   },
   {
     label: 'Rain',
     codes: [61, 63, 65, 66, 67, 80, 81, 82],
-    day: rainDay,
-    night: rainNight,
+    day: DayRain,
+    night: NightRain,
+    bgClass: 'bg-rain/25',
+    textClass: 'text-rain',
   },
   {
     label: 'Snow',
     codes: [71, 73, 75, 77, 85, 86],
-    day: snowDay,
-    night: snowNight,
+    day: DaySnow,
+    night: NightSnow,
+    bgClass: 'bg-snow/25',
+    textClass: 'text-snow',
   },
   {
     label: 'Storm',
     codes: [95, 96, 97, 99],
-    day: stormDay,
-    night: stormNight,
+    day: DayStorm,
+    night: NightStorm,
+    bgClass: 'bg-storm/25',
+    textClass: 'text-storm',
   },
 ]
 
@@ -74,13 +90,17 @@ export const getWeatherIcon = (code: number, isDay: number): TWeatherIconItem =>
 
   if (!group) {
     return {
-      icon: undefinedWeatherIcon,
+      icon: UnknownWeather,
       label: 'Unknown weather',
+      bgClass: 'bg-overcast/25',
+      textClass: 'text-overcast',
     }
   }
 
   return {
     icon: isDay ? group.day : group.night,
     label: isDay ? group.label : `${group.label} Night`,
+    bgClass: group.bgClass,
+    textClass: group.textClass,
   }
 }

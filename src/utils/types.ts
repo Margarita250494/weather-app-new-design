@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { type ReactNode } from 'react'
+import type { IconType } from 'react-icons'
 import { UNITS_KEY } from './helpers.ts'
 
 export interface WeatherResponse {
@@ -44,6 +45,7 @@ export interface MetricData {
   title: string
   value: number
   unit: string
+  icon:IconType
 }
 
 export interface Coords {
@@ -130,13 +132,17 @@ export type TUnitGroup = {
 export type TWeatherIcon = {
   label: string
   codes: number[]
-  day: string
-  night: string
+  day: React.ElementType
+  night: React.ElementType
+  bgClass: string
+  textClass: string
 }
 
 export type TWeatherIconItem = {
-  icon: string
+  icon: React.ElementType
   label: string
+  bgClass: string
+  textClass: string
 }
 
 export type TDailyCard = {

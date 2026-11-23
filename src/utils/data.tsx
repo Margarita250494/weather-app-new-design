@@ -1,3 +1,4 @@
+import { Droplets, Thermometer, Umbrella, Wind } from '../components/Icons.ts'
 import { UNITS_KEY } from './helpers.ts'
 import type { MetricData, TUnitGroup, WeatherResponse } from './types.ts'
 
@@ -6,21 +7,25 @@ export const getMetricData = (weather: WeatherResponse): MetricData[] => [
     title: 'Feels Like',
     value: weather.current.apparent_temperature,
     unit: weather.current_units.apparent_temperature,
+    icon: Thermometer,
   },
   {
     title: 'Humidity',
     value: weather.current.relative_humidity_2m,
     unit: weather.current_units.relative_humidity_2m,
+    icon: Droplets,
   },
   {
     title: 'Wind Speed',
     value: weather.current.wind_speed_10m,
     unit: weather.current_units.wind_speed_10m,
+    icon: Wind,
   },
   {
     title: 'Precipitation',
     value: weather.current.precipitation,
     unit: weather.current_units.precipitation,
+    icon: Umbrella,
   },
 ]
 

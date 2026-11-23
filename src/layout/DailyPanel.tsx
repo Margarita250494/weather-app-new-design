@@ -8,9 +8,7 @@ const DailyPanel = ({ weather }: { weather: WeatherResponse }) => {
   const unit = weather.current_units.temperature_2m
   const dayIsTrue = 1
   return (
-    <div className=" flex flex-col gap-6">
-      <h5 className="section-title">Daily Forecast</h5>
-      <div className="daily-grid ">
+      <div className="flex gap-10  overflow-x-auto pb-2 sm:justify-between ">
         {dailyData.map(({ time, temperature_2m_min, temperature_2m_max, weather_code }) => {
           const icon = getWeatherIcon(weather_code, dayIsTrue)
           return (
@@ -25,7 +23,7 @@ const DailyPanel = ({ weather }: { weather: WeatherResponse }) => {
           )
         })}
       </div>
-    </div>
+
   )
 }
 export default DailyPanel

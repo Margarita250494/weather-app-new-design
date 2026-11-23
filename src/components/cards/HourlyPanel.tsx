@@ -1,55 +1,42 @@
+import clsx from 'clsx'
 import { getDayName, getHourLabel, isCurrentHour } from '../../utils/helpers.ts'
 import { useHourlyWeather } from '../../utils/hooks/useHourlyWeather.ts'
 import type { WeatherResponse } from '../../utils/types.ts'
 import { getWeatherIcon } from '../../utils/weatherIcons.ts'
-import Button from '../Button.tsx'
 
 const HourlyPanel = ({ weather }: { weather: WeatherResponse }) => {
   const {
     listRef,
     currentRef,
-    menuRef,
-    toggleDayMenu,
     selectDay,
     activeDay,
-    openDay,
     days,
     dayHours,
     unit,
   } = useHourlyWeather(weather)
 
   return (
-    <div className=" hourly-panel flex flex-col gap-4 w-full lg:w-[30%]">
-      <div className="w-full flex justify-between items-center gap-2">
-        <h6 className="section-title ">Hourly Forecast</h6>
-        <div ref={menuRef} className="relative">
-          <Button
-            handleMenuOpen={toggleDayMenu}
-            ariaExpanded={openDay}
-            className="bg-neutral-600"
-            buttonLabel={getDayName(activeDay)}
-          />
-          {openDay && (
-            <div className="dropdown absolute left-0 top-full z-10 mt-2 w-full">
-              <ul className="">
-                {days
-                  .filter((day) => day !== activeDay)
-                  .map((day) => (
-                    <li key={day} className="">
-                      <button
-                        className="dropdown-item duration-500 w-full"
-                        onClick={selectDay(day)}
-                      >
-                        {getDayName(day)}
-                      </button>
-                    </li>
-                  ))}
-              </ul>
-            </div>
-          )}
-        </div>
+    <div className="flex flex-col ">
+      <div role="tablist" aria-label="Choose day">
+        <ul className="flex items-center overflow-x-auto gap-2">
+          {days.map((day) => (
+            <li key={day} className=" flex justify-center items-center pb-6 px-2">
+              <button
+                className={clsx(
+                  'flex shrink-0 items-center gap-2 rounded-full px-3.5 py-2 text-sm ' +
+                    ' duration-500 w-full cursor-pointer',
+                  day === activeDay ? 'bg-orb' : 'bg-glass-strong/60 opacity-60 hover:opacity-90'
+                )}
+                onClick={selectDay(day)}
+              >
+                {getDayName(day)}
+              </button>
+            </li>
+          ))}
+        </ul>
       </div>
-      <div ref={listRef} className=" relative flex flex-col  gap-4 max-h-150 overflow-y-auto">
+
+      <div ref={listRef} className="pt-1 flex overflow-x-auto pb-2 ">
         {dayHours.map((item) => {
           const isCurrent = isCurrentHour(item.time, weather.current.time)
           const icon = getWeatherIcon(item.weather_code, item.is_day)
@@ -58,11 +45,14 @@ const HourlyPanel = ({ weather }: { weather: WeatherResponse }) => {
             <div
               key={item.time}
               ref={isCurrent ? currentRef : null}
-              className="hourly-row justify-between items-center"
+              className="flex shrink-0 flex-col items-center gap-4 pl-8 pr-4"
             >
-              <span className="body-medium w-13.75">{getHourLabel(item.time)}</span>
-              <img src={icon.icon} alt={icon.label} className="w-8 h-8" />
-              <span className="caption w-10">
+              <span className="text-sm">{getHourLabel(item.time)}</span>
+              <span className="grid h-16 w-16 place-items-center rounded-full bg-orb">
+                <icon.icon className={clsx('w-8 h-8 icon-3d', icon.textClass)} />
+              </span>
+
+              <span className="text-sm opacity-80 font-semibold">
                 {item.temperature}
                 {unit}
               </span>
@@ -74,3 +64,4 @@ const HourlyPanel = ({ weather }: { weather: WeatherResponse }) => {
   )
 }
 export default HourlyPanel
+

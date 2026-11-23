@@ -1,16 +1,19 @@
+import clsx from 'clsx'
 import type { TDailyCard } from '../../utils/types.ts'
 
 const DailyCard = ({ dayName, icon, tMin, tMax, unit }: TDailyCard) => {
   return (
-    <div className="daily-card flex flex-col gap-4 justify-between items-center">
-      <h6 className="body-small">{dayName}</h6>
-      <img src={icon.icon} alt={icon.label} className="w-14 h-14" />
+    <div className="flex shrink-0 flex-col items-center gap-4 px-3">
+      <h6 className="text-[16px] font-medium">{dayName}</h6>
+      <span className={clsx('grid h-16 w-16 place-items-center rounded-full bg-orb')}>
+        <icon.icon className={clsx('w-8 h-8 icon-3d', icon.textClass)} />
+      </span>
       <div className="w-full flex justify-between gap-1 items-center">
-        <span className="caption ">
+        <span className="text-sm opacity-80 font-semibold ">
           {Math.round(tMax)}
           {unit}
         </span>
-        <span className="caption text-neutral-300">
+        <span className="text-sm opacity-50 font-semibold">
           {Math.round(tMin)}
           {unit}
         </span>

@@ -7,8 +7,8 @@ import type { UnitSettings } from './utils/types.ts'
 function App() {
   const [units, setUnits] = useState<UnitSettings>(UNIT_SYSTEMS.metric)
   return (
-    <div className=" flex flex-col items-center">
-      <div className="weather-container py-5 md:py-12  flex flex-col items-center">
+    <div className=" flex flex-col items-center relative min-h-screen overflow-hidden bg-sky font-sans font-light text-ink">
+      <div className="w-full max-w-312.5 p-5 md:p-12  flex flex-col items-center">
         <Header units={units} onSelect={setUnits} />
 
         <Main units={units} />
